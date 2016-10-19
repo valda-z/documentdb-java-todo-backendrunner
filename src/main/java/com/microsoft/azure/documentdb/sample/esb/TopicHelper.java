@@ -1,6 +1,7 @@
 package com.microsoft.azure.documentdb.sample.esb;
 
 import com.google.gson.Gson;
+import com.microsoft.azure.documentdb.sample.dao.TodoDaoFactory;
 import com.microsoft.azure.documentdb.sample.model.TodoItem;
 import com.microsoft.windowsazure.Configuration;
 import com.microsoft.windowsazure.exception.ServiceException;
@@ -43,18 +44,20 @@ public class TopicHelper {
                     // Display the topic message.
                     System.out.print("From topic: ");
                     byte[] b = new byte[200];
-                    String s = null;
+                    String s = "";
                     int numRead = message.getBody().read(b);
                     while (-1 != numRead)
                     {
-                        s = new String(b);
-                        s = s.trim();
-                        System.out.print(s);
+                        String _s = new String(b);
+                        s += _s.trim();
                         numRead = message.getBody().read(b);
                     }
+                    System.out.print(s);
+                    TodoItem itm = gson.fromJson(s, TodoItem.class);
+                    TodoDaoFactory.getDao().updateTodoItem(itm.getId(), true);
                     System.out.println();
                     System.out.println("Custom Property [category]: " +
-                            message.getProperty("category"));
+                            message.getProperty("Category"));
                     // Delete message.
                     System.out.println("Deleting this message.");
                     service.deleteMessage(message);
@@ -62,7 +65,8 @@ public class TopicHelper {
                 else
                 {
                     System.out.println("Finishing up - no more messages.");
-                    break;
+                    // break;
+                    Thread.sleep(1000);
                     // Added to handle no more messages.
                     // Could instead wait for more messages to be added.
                 }
