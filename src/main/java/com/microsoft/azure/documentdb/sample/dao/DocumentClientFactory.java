@@ -5,8 +5,10 @@ import com.microsoft.azure.documentdb.ConsistencyLevel;
 import com.microsoft.azure.documentdb.DocumentClient;
 
 public class DocumentClientFactory {
-    private static final String HOST = "https://valdadocdb.documents.azure.com:443/";
-    private static final String MASTER_KEY = "CzKUGwpq4EAflPKxGw6iNHPyxtR8qyFOf3NOFOI3Qg3KjMpVsFMRDunYSmQsFc4f4Pg2C8CGLk6QZ0TtpRVJsQ==";
+    // TODO: provide valid DocumentDB name
+    private static final String HOST = "https://<documentdb-name>.documents.azure.com:443/";
+    // TODO: provide valid KEY for DocumentDB
+    private static final String MASTER_KEY = "<documentdb-key>";
 
     private static DocumentClient documentClient;
 

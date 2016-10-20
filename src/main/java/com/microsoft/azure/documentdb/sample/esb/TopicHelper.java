@@ -21,9 +21,11 @@ public class TopicHelper {
     public void processToDo(){
         Configuration config =
                 ServiceBusConfiguration.configureWithSASAuthentication(
-                        "valdadocdb",
+                        // TODO: provide valid Service Bus name
+                        "<service-bus-name>",
                         "RootManageSharedAccessKey",
-                        "p1TU57GFQtPouySan3qUJ+waRevE/6WyO2EXtcHX43M=",
+                        // TODO: provide valid KEY for Service Bus
+                        "<service-bus-key>",
                         ".servicebus.windows.net"
                 );
 
@@ -36,7 +38,12 @@ public class TopicHelper {
 
             while(true)  {
                 ReceiveSubscriptionMessageResult resultSubMsg =
-                        service.receiveSubscriptionMessage("valdatopic1", "all", opts);
+                        service.receiveSubscriptionMessage(
+                                // TODO: provide valid Topic name
+                                "valdatopic1",
+                                // TODO: provide valid subscription name
+                                "all",
+                                opts);
                 BrokeredMessage message = resultSubMsg.getValue();
                 if (message != null && message.getMessageId() != null)
                 {
